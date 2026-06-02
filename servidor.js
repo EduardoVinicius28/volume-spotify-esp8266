@@ -1,16 +1,17 @@
+require('dotenv').config();
 const express = require('express');
 const SpotifyWebApi = require('spotify-web-api-node');
 
 const app = express();
 
 const spotifyApi = new SpotifyWebApi({
-    clientId: '2ca1a6b5449c416e938417ae6517ec98',
-    clientSecret: '6c5a72d9e55345dca80a0e63acebc7cc',
+    clientId: process.env.CLIENT_ID,
+    clientSecret: process.env.CLIENT_SECRET,
     redirectUri: 'https://ended-spinner-unlivable.ngrok-free.dev/callback'
 });
 
-spotifyApi.setAccessToken('BQB1k4V8tDt-dVirXxjWHtUUdQQTVuZMlzo7_sr_yunHTrUKofHcbYWi1FCbNSX0vCMco97CXg-2qqlvQaUXCheQaegf_6vafXjxaYRHrR4013u4JG1QmlczwTtAffax65qMtXTxYsCiDlRzm31N5nBPha3Mjx-70XCpXMeBAyA_VVWLlOy4QbX59jujUtOKDXS1fC2L17MRYmmkGptrNnBQFDut45zuX4aACS9523dLUvGawF4R1aoEo2Sy');
-spotifyApi.setRefreshToken('AQAZ27wjZmNaMgqkx0b2-KGzQFasClwsaJD-XsFW3kc0G-DHruebJptjZYYx2eqjib1HR85CKW2PkDLW60PXDPWE1NOZivKVD3_eX2_DA8pj8cejIS1ECGpVM7DSnti6jJ4');
+spotifyApi.setAccessToken(process.env.ACCESS_TOKEN);
+spotifyApi.setRefreshToken(process.env.REFRESH_TOKEN);
 
 // 🔁 Refresh automático a cada 50 minutos (token dura 60min)
 setInterval(async () => {
