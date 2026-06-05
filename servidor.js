@@ -54,6 +54,40 @@ app.get('/volume', async (req, res) => {
         }
     }
 });
+app.get('/play', async (req, res) => {
+  try {
+    const state = await spotifyApi.getMyCurrentPlaybackState();
+    if (state.body?.is_playing) {
+      await spotifyApi.pause();
+    } else {
+      await spotifyApi.play();
+    }
+    res.send('OK');
+  } catch (err) {
+    console.error('Erro play/pause:', err);
+    res.status(500).send('Erro');
+  }
+});
+
+app.get('/next', async (req, res) => {
+  try {
+    await spotifyApi.skipToNext();
+    res.send('OK');
+  } catch (err) {
+    console.error('Erro next:', err);
+    res.status(500).send('Erro');
+  }
+});
+
+app.get('/prev', async (req, res) => {
+  try {
+    await spotifyApi.skipToPrevious();
+    res.send('OK');
+  } catch (err) {
+    console.error('Erro prev:', err);
+    res.status(500).send('Erro');
+  }
+});
 
 // Rota de autenticação OAuth
 const scopes = ['user-modify-playback-state', 'user-read-playback-state'];
