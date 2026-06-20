@@ -59,8 +59,10 @@ app.get('/play', async (req, res) => {
     const state = await spotifyApi.getMyCurrentPlaybackState();
     if (state.body?.is_playing) {
       await spotifyApi.pause();
+      console.log('Musica Pausada')
     } else {
       await spotifyApi.play();
+      console.log('Musica Despausada')
     }
     res.send('OK');
   } catch (err) {
@@ -73,6 +75,7 @@ app.get('/next', async (req, res) => {
   try {
     await spotifyApi.skipToNext();
     res.send('OK');
+    console.log('Avançar')
   } catch (err) {
     console.error('Erro next:', err);
     res.status(500).send('Erro');
@@ -82,6 +85,7 @@ app.get('/next', async (req, res) => {
 app.get('/prev', async (req, res) => {
   try {
     await spotifyApi.skipToPrevious();
+    console.log('Voltar')
     res.send('OK');
   } catch (err) {
     console.error('Erro prev:', err);
